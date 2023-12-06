@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -94,4 +95,39 @@ public class CustomExceptionHandler
                         .status(HttpStatus.NOT_FOUND)
                         .build());
     }
+
+    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    public ResponseEntity<CustomErrorResponse> handleAccessDeniedException(AccessDeniedException e){
+        log.error(e.getMessage(),e);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(CustomErrorResponse.builder()
+                        .message(e.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.FORBIDDEN)
+                        .build());
+    }
+    @ExceptionHandler(PhoneNumberNotVerifiedException.class)
+    public ResponseEntity<CustomErrorResponse> handlePhoneNumberNotVerifiedException(PhoneNumberNotVerifiedException e){
+        log.error(e.getMessage(),e);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(CustomErrorResponse.builder()
+                        .message(e.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.FORBIDDEN)
+                        .build());
+    }
+    @ExceptionHandler(SmsVerificationException.class)
+    public ResponseEntity<CustomErrorResponse> handleSmsVerificationException(SmsVerificationException e){
+        log.error(e.getMessage(),e);
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(CustomErrorResponse.builder()
+                        .message(e.getMessage())
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.FORBIDDEN)
+                        .build());
+    }
+
 }

@@ -1,16 +1,14 @@
 package com.example.hotdesk.desk.dto;
 
-import com.example.hotdesk.desk.entity.Accessories;
+import com.example.hotdesk.enums.Accessories;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
-
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 public class DeskCreateDto
 {
     @NotNull

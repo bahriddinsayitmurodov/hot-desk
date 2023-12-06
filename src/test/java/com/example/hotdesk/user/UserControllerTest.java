@@ -1,7 +1,6 @@
 package com.example.hotdesk.user;
 
 import com.example.hotdesk.common.configuration.CustomPageImpl;
-import com.example.hotdesk.enums.Role;
 import com.example.hotdesk.user.dto.UserCreateDto;
 import com.example.hotdesk.user.dto.UserPatchDto;
 import com.example.hotdesk.user.dto.UserResponseDto;
@@ -58,7 +57,7 @@ class UserControllerTest {
         userCreateDto.setPassword("123");
         userCreateDto.setPhoneNumber("998912178220");
         userCreateDto.setEmail("anvar@mail.ru");
-        userCreateDto.setRole(Role.USER);
+//        userCreateDto.setRole(Role.USER);
 
 
         ResponseEntity<UserResponseDto> response = testRestTemplate.postForEntity("/user", userCreateDto, UserResponseDto.class);
@@ -112,7 +111,7 @@ class UserControllerTest {
         userUpdateDto.setLastName("Valiyev");
         userUpdateDto.setEmail("alivali@mail.ru");
         userUpdateDto.setPhoneNumber("998977070770");
-        userUpdateDto.setRole(Role.ADMIN);
+//        userUpdateDto.setRole(Role.ADMIN);
 
         ResponseEntity<UserResponseDto> responseEntity = testRestTemplate.exchange("/user/%s".formatted(1), HttpMethod.PUT, new HttpEntity<>(userUpdateDto), UserResponseDto.class);
 

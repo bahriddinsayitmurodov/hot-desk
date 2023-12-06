@@ -17,4 +17,5 @@ public class UserResponseDto extends UserBaseDto{
     private List<Desk>desks;
 
     private String extraMessage;
+
 }

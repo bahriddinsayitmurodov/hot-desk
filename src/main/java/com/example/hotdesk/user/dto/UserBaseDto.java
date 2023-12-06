@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,8 +25,6 @@ public class UserBaseDto {
     @NotBlank(message = "auth.user.lastName.required")
     private String lastName;
 
-    private Role role;
-
     @Email(message = "auth.user.email.required")
     private String email;
 
@@ -32,4 +32,5 @@ public class UserBaseDto {
     @Pattern(regexp = "^998\\d{9}$", message = "pattern.phone.number")
     private String phoneNumber;
 
+    private List<Role>roles;
 }

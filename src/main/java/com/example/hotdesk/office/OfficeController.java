@@ -9,10 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
+@PreAuthorize("hasAnyRole('ADMIN','MODERATOR')")
 @RequestMapping("/office")
 public class OfficeController
 {
@@ -24,6 +26,13 @@ public class OfficeController
         OfficeResponseDto officeResponseDto = officeService.create( createDTo );
         return ResponseEntity.status( HttpStatus.CREATED ).body( officeResponseDto );
     }
+    @DeleteMapping( "/{id}" )
+    @PreAuthorize("hasAnyAuthority('DELETE')")
+    public ResponseEntity<?> delete( @PathVariable( "id" ) Integer id )
+    {
+        officeService.delete( id );
+        return ResponseEntity.status( HttpStatus.NO_CONTENT ).build();
+    }
 
     @GetMapping
     public ResponseEntity<Page<OfficeResponseDto>> getOffices( Pageable pageable, @RequestParam( required = false ) String predicate )
@@ -31,7 +40,6 @@ public class OfficeController
         Page<OfficeResponseDto> all = officeService.getAll( pageable, predicate );
         return ResponseEntity.ok( all );
     }
-
     @GetMapping( "/{id}" )
     public ResponseEntity<OfficeResponseDto> get( @PathVariable( "id" ) Integer id )
     {
@@ -39,18 +47,12 @@ public class OfficeController
         return ResponseEntity.ok( responseDto );
     }
 
+    @PreAuthorize("hasAnyAuthority('UPDATE')")
     @PutMapping( "/{id}" )
     public ResponseEntity<OfficeResponseDto> update( @PathVariable( "id" ) Integer id, @RequestBody @Valid OfficeUpdateDto updateDto )
     {
         OfficeResponseDto responseDto = officeService.update( id, updateDto );
         return ResponseEntity.ok( responseDto );
-    }
-
-    @DeleteMapping( "/{id}" )
-    public ResponseEntity<?> delete( @PathVariable( "id" ) Integer id )
-    {
-        officeService.delete( id );
-        return ResponseEntity.status( HttpStatus.NO_CONTENT ).build();
     }
 
 }

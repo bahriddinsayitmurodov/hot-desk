@@ -1,15 +1,10 @@
 package com.example.hotdesk.user;
 
-import com.example.hotdesk.jwt.JwtService;
-import com.example.hotdesk.user.dto.UserCreateDto;
-import com.example.hotdesk.user.dto.UserPatchDto;
-import com.example.hotdesk.user.dto.UserResponseDto;
-import com.example.hotdesk.user.dto.UserUpdateDto;
+import com.example.hotdesk.user.dto.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,16 +15,21 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    private final JwtService jwtService;
 
-    @PostMapping
+    @PostMapping( "/sign-in" )
+    public ResponseEntity<UserSignInResponseDto> signIn( @RequestBody @Valid UserSignInDto signInDto )
+    {
+        UserSignInResponseDto userResponseDto = userService.signIn( signInDto );
+        return ResponseEntity
+                .ok( userResponseDto );
+    }
+
+    @PostMapping("/register")
     public ResponseEntity<UserResponseDto> createUser(@RequestBody @Valid UserCreateDto userCreateDto )
     {
         UserResponseDto userResponseDto = userService.create( userCreateDto );
-        String token = jwtService.generateToken(userCreateDto.getPhoneNumber());
         return ResponseEntity
                 .status( HttpStatus.CREATED )
-                .header(HttpHeaders.AUTHORIZATION, "Bearer %s".formatted(token))
                 .body( userResponseDto );
     }
 

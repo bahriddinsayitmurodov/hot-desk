@@ -4,7 +4,6 @@ import com.example.hotdesk.common.configuration.CustomPageImpl;
 import com.example.hotdesk.desk.dto.DeskCreateDto;
 import com.example.hotdesk.desk.dto.DeskResponseDto;
 import com.example.hotdesk.desk.dto.DeskUpdateDto;
-import com.example.hotdesk.desk.entity.Accessories;
 import com.example.hotdesk.office.dto.AddressDto;
 import com.example.hotdesk.office.dto.OfficeCreateDTo;
 import com.example.hotdesk.office.dto.OfficeResponseDto;
@@ -20,15 +19,12 @@ import org.springframework.boot.testcontainers.service.connection.ServiceConnect
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @Testcontainers
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)

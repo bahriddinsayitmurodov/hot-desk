@@ -5,6 +5,7 @@ import com.example.hotdesk.jwt.JwtSecurityFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -14,6 +15,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@EnableMethodSecurity(  prePostEnabled = true,
+                        securedEnabled = true,
+                        jsr250Enabled = true)
 @RequiredArgsConstructor
 public class SecurityConfiguration
 {
@@ -24,19 +28,10 @@ public class SecurityConfiguration
             "/v3/api-docs/**",
             "/swagger-resources/**",
             "/webjars/**",
-            "/auth/register",
+            "/user/register",
 
-            "/user",
-            "/user/**",
-
-            "/office",
-            "/office/**",
-
-            "/room",
-            "/room/**",
-
-            "/desk",
-            "/desk/**",
+            "/user/sign-in",
+            "/sms-code/**",
 
             "/api/***"
     };

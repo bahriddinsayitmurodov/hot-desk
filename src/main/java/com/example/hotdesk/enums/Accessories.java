@@ -1,4 +1,4 @@
-package com.example.hotdesk.desk.entity;
+package com.example.hotdesk.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

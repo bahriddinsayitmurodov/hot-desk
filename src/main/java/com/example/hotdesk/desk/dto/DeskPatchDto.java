@@ -1,6 +1,6 @@
 package com.example.hotdesk.desk.dto;
 
-import com.example.hotdesk.desk.entity.Accessories;
+import com.example.hotdesk.enums.Accessories;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

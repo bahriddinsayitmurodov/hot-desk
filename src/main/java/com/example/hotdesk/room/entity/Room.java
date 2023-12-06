@@ -1,5 +1,6 @@
 package com.example.hotdesk.room.entity;
 
+import com.example.hotdesk.common.auditing.Auditable;
 import com.example.hotdesk.desk.entity.Desk;
 import com.example.hotdesk.office.entity.Office;
 import jakarta.persistence.*;
@@ -8,10 +9,11 @@ import lombok.*;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-public class Room
+public class Room extends Auditable
 {
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )

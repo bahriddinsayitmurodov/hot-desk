@@ -1,7 +1,6 @@
 package com.example.hotdesk.user.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 

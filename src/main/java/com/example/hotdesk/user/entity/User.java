@@ -1,19 +1,23 @@
 package com.example.hotdesk.user.entity;
 
 import com.example.hotdesk.desk.entity.Desk;
+import com.example.hotdesk.enums.Permission;
 import com.example.hotdesk.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-@Data
 @Entity
-@Table(name = "users")
+@Table(name = "'user'")
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
@@ -32,8 +36,11 @@ public class User implements UserDetails {
 
     private String password;
 
+    @Column(nullable = false)
+    private boolean isPhoneNumberVerified;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private List<Role> roles;
 
     // to do eager or lazy
     @OneToMany(fetch = FetchType.LAZY)
@@ -46,7 +53,14 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        Set<SimpleGrantedAuthority>authorities = new HashSet<>();
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_"+role));
+            for (Permission permission : role.getPermissions()) {
+                authorities.add(new SimpleGrantedAuthority(permission.toString()));
+            }
+        }
+        return authorities;
     }
 
     @Override
@@ -72,5 +86,12 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public User(String firstName, String lastName, String phoneNumber, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
     }
 }
